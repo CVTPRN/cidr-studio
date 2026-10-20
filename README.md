@@ -6,7 +6,10 @@ A small, visual IPv4 inventory and subnet planner. No backend, packages, API key
 
 - Set a parent IPv4 network.
 - Enter existing reserved subnets individually or paste `CIDR, Name` lines.
-- See a proportional address-space map and all available CIDR blocks.
+- Explore a zoomable address-space map with equal-size CIDR tiles, breadcrumbs and overview navigation.
+- See total IP addresses, unallocated addresses, reserved addresses and tracked occupied host IPs in each view.
+- Compare total and completely free block counts for every prefix from the current network through /32. Counts describe alternative subdivisions and must not be added together.
+- Change tile size (up to 256 blocks at once), inspect reserved host IPs, or reserve a free view.
 - Track occupied host IPs inside each reserved subnet, by pasting a list or clicking the address grid.
 - See exact free host ranges and browse address grids in 256-address pages.
 - Request a new subnet by prefix or usable host count.
@@ -71,6 +74,7 @@ Official setup: https://docs.github.com/en/pages/getting-started-with-github-pag
 - `dist/style.css` — responsive styling
 - `dist/network.js` — pure IPv4 arithmetic and validation
 - `dist/app.js` — local state and interactions
+- `dist/zoom.js` — drill-down map and subnet capacity cards
 - `tests/network.test.cjs` — allocation tests
 - `.github/workflows/pages.yml` — test and static deployment workflow
 
