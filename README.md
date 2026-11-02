@@ -1,8 +1,12 @@
 # CIDR Studio
 
-A small, visual IPv4 inventory and subnet planner. No backend, packages, API keys or build step.
+A simple IPv4 subnet calculator with a visual inventory and subnet planner. No backend, packages, API keys or build step.
 
 ## What it does
+
+The **Calculator** homepage accepts an IPv4 network (such as `10.0.0.0/24`) or a prefix alone (`/24` or `24`). It shows the total address count and how many subnets of a requested size fit. Results update as you type. For example, a `/24` contains 256 addresses, four `/26` subnets, or 128 `/31` subnets. Prefixes from `/0` to `/32` are supported. A larger requested subnet returns zero with an explanation. Host bits in a full CIDR are normalized to the network boundary, which is displayed explicitly. Counts include every address and do not subtract reservations or cloud-specific exclusions.
+
+The **Planner**, available at `planner.html`, retains the existing inventory tools and saved browser data:
 
 - Set a parent IPv4 network.
 - Enter existing reserved subnets individually or paste `CIDR, Name` lines.
@@ -48,10 +52,13 @@ Node.js 22 is used in CI. No npm install is required.
 
 ```bash
 node --check dist/app.js
-node --test tests/network.test.cjs
+node --check dist/network.js
+node --check dist/calculator-math.js
+node --check dist/calculator.js
+node --test tests/*.test.cjs
 ```
 
-Tests cover IPv4 boundaries, /0, /31, /32, containment, overlapping reservations, host validation, fragmented free space and randomized comparisons against an exhaustive allocation oracle.
+Tests cover calculator capacity for every parent/child prefix pair, invalid inputs, normalization, IPv4 boundaries, /0, /31, /32, containment, overlapping reservations, host validation, fragmented free space and randomized comparisons against an exhaustive allocation oracle.
 
 ## Publish with GitHub Pages
 
@@ -67,13 +74,18 @@ Official setup: https://docs.github.com/en/pages/getting-started-with-github-pag
 
 ## Project layout
 
-- `dist/index.html` — interface
+- `dist/index.html` — calculator homepage
+- `dist/planner.html` — existing inventory and subnet planner
+- `dist/calculator-math.js` — pure calculator parsing and capacity arithmetic
+- `dist/calculator.js` — live calculator interactions
+- `dist/calculator.css` — calculator styling
+- `dist/navigation.css` — shared page navigation
 - `dist/style.css` — responsive styling
 - `dist/network.js` — pure IPv4 arithmetic and validation
 - `dist/app.js` — local state and interactions
 - `tests/network.test.cjs` — allocation tests
+- `tests/calculator.test.cjs` — calculator boundary and validation tests
 - `.github/workflows/pages.yml` — test and static deployment workflow
 
-## Verification status
+The GitHub Actions workflow runs the tests and syntax checks before publishing `dist/` to GitHub Pages.
 
-The calculation tests and JavaScript syntax checks pass locally. Browser-based visual QA and the GitHub Pages deployment have not been run in this environment.

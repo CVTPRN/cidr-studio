@@ -20,7 +20,9 @@ jobs:
         run: |
           node --check dist/app.js
           node --check dist/network.js
-          node --test tests/network.test.cjs
+          node --check dist/calculator-math.js
+          node --check dist/calculator.js
+          node --test tests/*.test.cjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -38,3 +40,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
